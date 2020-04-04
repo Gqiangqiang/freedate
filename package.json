@@ -1,0 +1,19 @@
+{
+  "name": "freedate",
+  "version": "1.0.0",
+  "description": "让你更自由的获取时间并组合成自己想要的格式",
+  "main": "freedate.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Gqiangqiang/freedate.git"
+  },
+  "author": "qiangqiang",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Gqiangqiang/freedate/issues"
+  },
+  "homepage": "https://github.com/Gqiangqiang/freedate#readme"
+}
