@@ -55,7 +55,23 @@
 |  TS | 返回时间戳(`time stamp`) | 1578121532
 
 ## 注意(Attention)
-以M为例，MM的优先级比M要高，所以如果出现了fd("MMM") 则得到的结果是: 01M
+**`When word splicing is needed, JS is not very friendly to English users`**
 
-在随意摆放参数位置的同时，也有一些限制（对中文影响相对较弱一些），在输入的字符串中会替换第一次出现的对照表中相应的字符，再次出现的字符则不会再被替换：fd("sssssgs") ==> 03sssgs(获取的是秒，因为ss比s的优先级高，所以会被解析为ss，而不是s)
-如果想要的结果中有这些字符，可能会需要
+`fd`函数中会把在字符串中出现的第一个符合条件的字符替换为时间，且再次出现的字符不会再被替换。  
+```js
+    fd("M M M") ==> 4 M M。
+```
+以M为例，MM的优先级比M要高，所以如果输入的字符串中有M也有MM那么被替换的会是MM。
+```js
+    fd("M-MM-MM") ==> M-04-MM。
+```
+The `fd` function will replace the first eligible character in the string with the time, and the character that appears again will not be replaced.
+```js
+    fd("M M M") ==> 4 M M。
+``` 
+For example, the priority of MM is higher than that of M, so if there is also MM in the input string, MM will be replaced.
+```js
+    fd("M-MM-MM") ==> M-04-MM。
+```
+
+*Use Baidu translation (there may be inaccuracies)*
