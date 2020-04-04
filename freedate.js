@@ -5,6 +5,7 @@
 function fd(timestr){
 	var datestr = timestr;			//赋值给内部变量以便进行操作
 	var fdate = new Date();			//新建Date对象
+	var TS = fdate.valueOf();		//获取时间戳
 	var Y = fdate.getFullYear();	//获取年
 	var M =fdate.getMonth() + 1;	//获取月 从0开始，所以得到的数值加1
 	var D = fdate.getDate();		//获取日
@@ -12,30 +13,39 @@ function fd(timestr){
 	var m = fdate.getMinutes();		//获取分
 	var s = fdate.getSeconds();		//获取秒
 	var w = fdate.getDay();			//获取星期
+	var W;
 	switch (w) {
 		case 1:
 			w = '星期一';
+			W = 'Mon';
 			break;
 		case 2:
 			w = '星期二';
+			W = 'Tue';
 			break;
 		case 3:
 			w = '星期三';
+			W = 'Wed';
 			break;
 		case 4:
 			w = '星期四';
+			W = 'Thur';
 			break;
 		case 5:
 			w = '星期五';
+			W = 'Fri';
 			break;
 		case 6:
 			w = '星期六';
+			W = 'Sat';
 			break;
 		case 0:
 			w = '星期日';
+			W = 'Sun';
 			break;
 		default:
 			w = '星期获取出错';
+			W = 'Error';
 			break;
 	}
 	if(datestr == "" || datestr == undefined){
@@ -61,11 +71,14 @@ function fd(timestr){
 	if(datestr.indexOf("w") != -1){
 		datestr = datestr.replace("w", w);
 	}
+	if(datestr.indexOf("W") != -1){
+		datestr = datestr.replace("W",W);
+	}
 	if(datestr.indexOf("h") != -1){
 		if(datestr.indexOf("hh") != -1){
 			datestr = datestr.replace("hh", addZero(h));
 		} else {
-			datestr = datestr.replace("h", h);
+			datestr = datestr.replace("h", addZero(h) > 12 ? h - 12 : h);
 		}
 	}
 	if(datestr.indexOf("m") != -1){
@@ -81,6 +94,9 @@ function fd(timestr){
 		} else {
 			datestr = datestr.replace("s", s);
 		}
+	}
+	if(datestr.indexOf("TS" != -1)){
+		datestr = datestr.replace("TS",TS);
 	}
 	//对传进的值进行比对，如果小于10，则在其前面加入一个0；如输入3，返回结果为03。
 	function addZero(data){
