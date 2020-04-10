@@ -6,8 +6,10 @@ var fd = {
 	 * @param {Date} newDate 
 	 */
 	getTime:function(timestr,newDate){
-		if(typeof(timestr) !== "string"){
-			throw new Error("The first parameter must be of type 'string'");
+		if(timestr !== undefined){
+			if(typeof(timestr) !== "string"){
+				throw new Error("The first parameter must be of type 'string'");
+			}
 		}
 		if(newDate !== undefined){
 			if(newDate instanceof Date){

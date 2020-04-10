@@ -1,6 +1,6 @@
 {
   "name": "freedate",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "让你更自由的获取时间并组合成自己想要的格式",
   "main": "freedate.js",
   "scripts": {

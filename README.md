@@ -99,8 +99,10 @@ For example, the priority of MM is higher than that of M, so if there is also MM
 
 # 版本(Version)
 ***`If necessary, please translate by yourself,thanks for your understanding.`***
+**V1.0.3**
+- 修复获取时间的时不传入值出错的问题
 
-**V1.0.2** 
+**V1.0.2**
 - 修改了时间的获取方式：引入后通过`fd.getTime()`的方式来使用方法
 - 增加`getTS()`来获取时间戳,移除了通过`getTime("TS")`来获取时间戳的方式，可以输入参数“天”
 - 增加`tsToDate()`来把`timestamp`转换为`Date`
