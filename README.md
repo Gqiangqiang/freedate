@@ -99,6 +99,8 @@ For example, the priority of MM is higher than that of M, so if there is also MM
 
 # 版本(Version)
 ***`If necessary, please translate by yourself,thanks for your understanding.`***
+**V1.0.4**
+- 修复getTS()时间获取问题
 **V1.0.3**
 - 修复获取时间的时不传入值出错的问题
 

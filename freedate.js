@@ -1,4 +1,3 @@
-var fdate = new Date();			//新建Date全局变量
 var fd = {
 	/**
 	 * get formatting time
@@ -6,6 +5,7 @@ var fd = {
 	 * @param {Date} newDate 
 	 */
 	getTime:function(timestr,newDate){
+		var fdate = new Date();			//新建Date
 		if(timestr !== undefined){
 			if(typeof(timestr) !== "string"){
 				throw new Error("The first parameter must be of type 'string'");
@@ -130,6 +130,7 @@ var fd = {
 	 * @param {number} offset
 	 */
 	getTS:function(offset){
+		var fdate = new Date();			//新建Date
 		var TS = fdate.valueOf();
 		if(offset !== undefined){
 			if(typeof(offset) !== 'number'){
