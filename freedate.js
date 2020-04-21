@@ -1,23 +1,23 @@
 var fd = {
 	/**
 	 * get formatting time
-	 * @param {string} timestr 
-	 * @param {Date} newDate 
+	 * @param { string } [timestr] 
+	 * @param { Date } [otherDate]
 	 */
-	getTime:function(timestr,newDate){
+	getDate:function(timestr,otherDate){
 		var fdate = new Date();			//新建Date
-		if(timestr !== undefined){
-			if(typeof(timestr) !== "string"){
-				throw new Error("The first parameter must be of type 'string'");
-			}
+		if(timestr !== undefined && typeof(timestr) !== "string"){
+			throw new Error("The first parameter must be of type 'string'");
 		}
-		if(newDate !== undefined){
-			if(newDate instanceof Date){
-				fdate = newDate;
+		if(otherDate !== undefined){
+			if(otherDate instanceof Date){
+				fdate = otherDate;
 			} else {
 				throw new Error("The second parameter must be of type 'Date'");
 			}
 		}
+		var weekE = ['Sun','Mon','Tue','Wed','Thur','Fri','Sat'];
+		var WeekZH = ["星期日","星期一","星期二","星期三","星期四","星期五","星期六"];
 		var datestr = timestr;			//赋值给内部变量以便进行操作
 		var Y = fdate.getFullYear();	//获取年
 		var M = fdate.getMonth() + 1;	//获取月 从0开始，所以得到的数值加1
@@ -25,42 +25,10 @@ var fd = {
 		var h = fdate.getHours();		//获取小时
 		var m = fdate.getMinutes();		//获取分
 		var s = fdate.getSeconds();		//获取秒
-		var w = fdate.getDay();			//获取星期
-		var W;
-		switch (w) {
-			case 1:
-				w = '星期一';
-				W = 'Mon';
-				break;
-			case 2:
-				w = '星期二';
-				W = 'Tue';
-				break;
-			case 3:
-				w = '星期三';
-				W = 'Wed';
-				break;
-			case 4:
-				w = '星期四';
-				W = 'Thur';
-				break;
-			case 5:
-				w = '星期五';
-				W = 'Fri';
-				break;
-			case 6:
-				w = '星期六';
-				W = 'Sat';
-				break;
-			case 0:
-				w = '星期日';
-				W = 'Sun';
-				break;
-			default:
-				w = '星期获取出错';
-				W = 'Error';
-				break;
-			}
+		var week = fdate.getDay();		//获取星期【位置】
+		var w = weekE[week];
+		var W = WeekZH[week];
+		
 		if(datestr == "" || datestr == undefined){
 			datestr = "Y/MM/DD hh:mm:ss";
 		}
@@ -125,26 +93,30 @@ var fd = {
 		return datestr;
 	},
 	/**
-	 * get timestamp
-	 * 获取时间戳函数
-	 * @param {number} offset
+	 * 获取时间戳函数 如果传入的是Date，则是由传入的日期转为timestamp
+	 * @param {(number|Date)} [params]
 	 */
-	getTS:function(offset){
+	getTS:function(params){
 		var fdate = new Date();			//新建Date
 		var TS = fdate.valueOf();
-		if(offset !== undefined){
-			if(typeof(offset) !== 'number'){
-				throw new Error("The parameter must be of type 'number'");
+		if(params !== undefined){
+			if(typeof(params) === 'number'){
+				// console.log("The type is Number");
+				TS += 86400000*params;
+			} else if(params instanceof Date){
+				// console.log("The type is Date");
+				TS = params.valueOf();
+			} else {
+				throw new Error("The parameter must be of type 'number' or 'Date");
 			}
-			TS += 86400000*offset;
 			
 		}
 		return TS;
 	},
 	/**
 	 * timestamp to date
-	 * @param {number} ts // timestamp
-	 * @param {string} datestr
+	 * @param {number} ts - timestamp
+	 * @param {string} [datestr] - 如果你想直接格式化，那么输入你想要的的格式，格式与getDate相同
 	 */
 	tsToDate:function(ts,datestr){
 		let date;
@@ -160,9 +132,9 @@ var fd = {
 			if(typeof(datestr) !== 'string'){
 				throw new Error("The second parameter must be of type String");
 			}
-			date = this.getTime(datestr, date);
+			date = this.getDate(datestr, date);
 		}
 		return date;
-	}
+	},
 }
 module.exports = fd;

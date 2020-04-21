@@ -1,11 +1,11 @@
 # freedate
+    Make you more free to get time and combine it into the format you want    
     让你更自由的获取时间并组合成自己想要的格式
 
-    Make you more free to get time and combine it into the format you want
 
 # 使用方法(How to use)
 ```js
-现在的默认格式为(default format)：
+现在的默认格式为(default format):
     var fd = require('freedate');
     var date = fd.getTime();
     console.log(date); //2020/01/04 15:21:37
@@ -33,21 +33,26 @@
     
     //把已有的其他时间格式化
     fd.getTime("Y/MM/DD hh:mm:ss W",fd.tsToDate(fd.getTS(10))) ==> "2020/04/20 14:43:05 Mon" //'otherDate' must be type of Date
+
     // get the timestamp
     fd.getTS() ==> 1586491413246   //现在 Now
     fd.getTS(-1) ==> 1586405054923 //一天前 A day earlier
     fd.getTS(1) ==> 1586577868836 //一天后 After a day
-    
+    // date to timestamp
+    fd.getTS(new Date()) ==> 1586491485462
+
     // timestamp to date
     fd.tsToDate(1586491413246) ==> '2020-04-10T04:03:33.246Z'
+    //可以直接指定想要的时间格式
     fd.tsToDate(1586491413246,"Y/MM/DD hh:mm:ss W") ==> '2020/04/10 12:03:33 Fri'
 ```
-    如果有两个“D”，那么当数字小于10的时候，有零在这个数字前面，就像“01”或者“02”;如果只有一个“D”的话，就没有这个0。使用过程中可以混合使用。
+    如果有两个“D”，那么当数字小于10的时候，有零在这个数字前面，就像“01”或者“02”;  
+    如果只有一个“D”的话，就没有这个0。使用过程中可以混合使用。
+    
+    If there are two "D", then when the number is less than 10, there is zero in front of the number, such as "01" or "02"; 
+    if there is only one "D", there is no zero. Can be mixed during use.
 
-    If there are two "D", then when the number is less than 10, there is zero in front of the number, such as "01" or "02"; if there is only one "D", there is no zero. Can be mixed during use.
-
-
-# getTime参数对照表(Comparison table)
+# getDate字符对照表(Comparison table)
 | code | return | for example |
 |:-:|:-:|:-:|
 |  Y  |  返回年(`year`) | 2018,2019,2020...
@@ -63,51 +68,68 @@
 |  ss |  返回秒(`second`)，有前置的0 | 	01~60
 |  w  |  返回星期(`week` Chinese)，值为:星期X | 星期一~星期日
 |  W  |  返回星期(`week` English)， | Sun/Mon/Tue/Wed/Thur/Fri/Sat
-|  TS | 返回时间戳(`time stamp`) | 1578121532
+
 
 # 方法（methods）
-- **getTime(timestr, newDate)**
-    - `timestr` 类型必须是`String`，可以为空(The type must be a `string` and ***can be null***)  
-    - `newDate` 类型必须是`Date`，可以为空(The type must be a `Date` and ***can be null***)  
+- **getTime(timestr, otherDate)**
+    - `timestr`:  
+        - 类型必须是`String`，可以为空(The type must be a `string` and ***can be null***)  
+    - `otherDate`:  
+        - 类型必须是`Date`，可以为空(The type must be a `Date` and ***can be null***)  
 
-- **getTS(offset)**  
-    -  `offset` 必须是`number`类型,可以为空,可以为负值（负值就是几天前，正值就是几天后），如果为空获取的是当前时间的时间戳,(The type must be a `number` and ***can be null***. It can be negative if it is null to get the timestamp of the current time)  
+- **getTS(params)**  
+    -  `params`:  
+        - 必须是`Number`或者`Date`类型,可以为空,可以为负值（负值就是几天前，正值就是几天后），如果为空获取的是当前时间的时间戳,如果是`Date`类型的话，则返回给定`Date`的时间戳。(The type must be a `Number` or `Date` and ***can be null***. It can be negative if it is null to get the timestamp of the current time，If it is of type 'date', the time stamp of the given 'date' will be returned)  
 
-- **tsToDate(ts,datestr)**
-    - `ts` 必须是`number`类型，不能为空(The type must be a `number` and ***cannot be null***)
-    - `datestr` 必须是`String`类型，可以为空(The type must be a `string` and ***can be null***)
+- **tsToDate(ts, datestr)**
+    - `ts`:
+        - 必须是`Number`类型，不能为空(The type must be a `Number` and ***cannot be null***)
+    - `datestr`:  
+        - 必须是`String`类型，可以为空(The type must be a `string` and ***can be null***)
 
 ## 注意(Attention)
 **`When word splicing is needed, freedate is not very friendly to English users`**
 
-`fd`函数中会把在字符串中出现的第一个符合条件的字符替换为时间，且再次出现的字符不会再被替换。
+`getDate`函数中会把在字符串中出现的第一个符合条件的字符替换为时间，且再次出现的字符不会再被替换。
 ```js
-    fd.getTime("M M M") ==> 4 M M。
+    fd.getTime("M M M") ==> 4 M M
 ```
 以M为例，MM的优先级比M要高，所以如果输入的字符串中有M也有MM那么被替换的会是MM。
 ```js
-    fd.getTime("M-MM-MM") ==> M-04-MM。
-```
-The `fd` function will replace the first eligible character in the string with the time, and the character that appears again will not be replaced.
-```js
-    fd.getTime("M M M") ==> 4 M M。
-``` 
-For example, the priority of MM is higher than that of M, so if there is also MM in the input string, MM will be replaced.
-```js
-    fd.getTime("M-MM-MM") ==> M-04-MM。
+    fd.getTime("M-MM-MM") ==> M-04-MM
 ```
 
+The `getDate` function will replace the first eligible character in the string with the time, and the character that appears again will not be replaced.
+```js
+    fd.getTime("M M M") ==> 4 M M
+```
+For example, the priority of MM is higher than that of M, so if there is also MM in the input string, MM will be replaced.
+```js
+    fd.getTime("M-MM-MM") ==> M-04-MM
+```
+
+**No matter what you think, you can contact me: 1909809427@qq.com**
 # 版本(Version)
-***`If necessary, please translate by yourself,thanks for your understanding.`***
+***`If necessary, please translate by yourself,thanks for your understanding.`***  
+
+**V1.0.6**
+- 更改星期的获取；以前是使用witch判断，现在直接从已定义的数组中获取。
+
+
+**V1.0.5**
+- 增加把`date`类型转换为`timestamp`类型,使用`getTS()`输入参数为`Date`即可  
+
 **V1.0.4**
-- 修复getTS()时间获取问题
+- 修复`getTS()`时间获取问题  
+
 **V1.0.3**
-- 修复获取时间的时不传入值出错的问题
+- 修复获取时间的时不传入值出错的问题  
 
 **V1.0.2**
 - 修改了时间的获取方式：引入后通过`fd.getTime()`的方式来使用方法
 - 增加`getTS()`来获取时间戳,移除了通过`getTime("TS")`来获取时间戳的方式，可以输入参数“天”
-- 增加`tsToDate()`来把`timestamp`转换为`Date`
+- 增加`tsToDate()`来把`timestamp`转换为`Date`  
 
 **V1.0.1**
-- 增加了使用字符串"TS"来获取时间戳。(Added the use of the string "TS" to get the timestamp.)
+
+- 增加了使用字符串"TS"来获取时间戳。
