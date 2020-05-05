@@ -1,24 +1,42 @@
 var fd = {
 	/**
 	 * get formatting time
-	 * @param { string } [timestr] 
-	 * @param { Date } [otherDate]
+	 * @param { (String | Date) } [par1] 
+	 * @param { (String | Date) } [par2]
 	 */
-	getDate:function(timestr,otherDate){
+	getDate:function(par1,par2){
 		var fdate = new Date();			//新建Date
-		if(timestr !== undefined && typeof(timestr) !== "string"){
-			throw new Error("The first parameter must be of type 'string'");
-		}
-		if(otherDate !== undefined){
-			if(otherDate instanceof Date){
-				fdate = otherDate;
+		var datestr;
+		console.log(typeof(par1) === "string");
+		if(par1 === undefined){
+			console.log("par1是undefined");
+			datestr = "Y/MM/DD hh:mm:ss";
+		} else if(par1 instanceof Date){
+			console.log("par1是Date");
+			fdate = par1;
+			if(typeof(par2) === "string"){
+				if(par2.trim() === ""){
+					datestr = "Y/MM/DD hh:mm:ss";
+				} else {
+					datestr = par2;
+				}
 			} else {
-				throw new Error("The second parameter must be of type 'Date'");
+				datestr = "Y/MM/DD hh:mm:ss";
+			}
+		} else if(typeof(par1) === "string"){
+			if(par1.trim() === ""){
+				console.log("par1是空字符串");
+				datestr = "Y/MM/DD hh:mm:ss";
+			} else {
+				console.log("par1是字符串");
+				datestr = par1;
+			}
+			if(par2 instanceof Date){
+				fdate = par2;
 			}
 		}
 		var weekE = ['Sun','Mon','Tue','Wed','Thur','Fri','Sat'];
 		var WeekZH = ["星期日","星期一","星期二","星期三","星期四","星期五","星期六"];
-		var datestr = timestr;			//赋值给内部变量以便进行操作
 		var Y = fdate.getFullYear();	//获取年
 		var M = fdate.getMonth() + 1;	//获取月 从0开始，所以得到的数值加1
 		var D = fdate.getDate();		//获取日
@@ -29,9 +47,6 @@ var fd = {
 		var w = weekE[week];
 		var W = WeekZH[week];
 		
-		if(datestr == "" || datestr == undefined){
-			datestr = "Y/MM/DD hh:mm:ss";
-		}
 		//年 Year
 		if(datestr.indexOf("Y") != -1){
 			datestr = datestr.replace("Y", Y);
