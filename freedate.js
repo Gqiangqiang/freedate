@@ -7,7 +7,6 @@ const fd = {
 	getDate:function(par1,par2){
 		let fdate = new Date()			//新建Date
 		let datestr = "YY-MM-DD hh:mm:ss" //初始化替换字符串
-
 		if(par1 instanceof Date){ //判断两个参数的类型
 			fdate = par1
 			if(typeof(par2) === "string"){
@@ -36,7 +35,6 @@ const fd = {
 		let W = WeekZH[week]
 		//把要替换的字符和值放到对象中，之后遍历取出替换
 		let STR = {"Y":Y,"M":M,"D":D,"h":h,"m":m,"s":s,"w":w,"W":W}
-
 		/* 替换字符的函数 */
 		function replaces(str, numbers) {
 			if(str == "w" || str == "W") {
@@ -114,5 +112,4 @@ const fd = {
 		return date
 	},
 }
-
 module.exports = fd //如果是在html中直接引用，可以把这行代码注释了，以免报错

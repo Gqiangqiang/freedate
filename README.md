@@ -113,6 +113,11 @@ For example, the priority of MM is higher than that of M, so if there is also MM
 **No matter what you think, you can contact me: 1909809427@qq.com**
 # 版本(Version)
 ***`If necessary, please translate by yourself,thanks for your understanding.`***  
+**V1.0.9**
+- 更改了默认获取时间的样式 
+    - 现在：`YY-MM-DD hh:mm:ss` 
+    - 之前：`YY/MM/DD hh:mm:ss`
+
 **V1.0.8**
 - 改进了一下字符替换的过程代码，去除少量不需要的代码
 - 现在使用`Y`或者`YY`都可以获取年份
