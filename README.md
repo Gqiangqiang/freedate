@@ -2,7 +2,6 @@
     Make you more free to get time and combine it into the format you want    
     让你更自由的获取时间并组合成自己想要的格式
 
-
 # 使用方法(How to use)
 ```js
 现在的默认格式为(default format):
@@ -13,49 +12,52 @@
 ## 更多(more)
 ```js 
 如(for example)：
-    fd.getDate("Y-M-D") ==> '2020-1-4'
-
-    fd.getDate("M DD") ==> '1 04'
-
-    fd.getDate("h:m:s") ==> '3:23:33'
+    fd.getDate("YY") // '2020'
     
-    fd.getDate("Y/M/D h:m:s") ==> '2020/1/4 3:23:33'
+    fd.getDate("Y-M-D") // '2020-1-4'
 
-    fd.getDate("Y/MM/DD W hh:mm:ss") ==> '2020/01/04 Thur 15:23:33'
+    fd.getDate("M DD") // '1 04'
 
-    fd.getDate("Y/MM/DD w hh:mm:ss") ==> '2020/01/04 星期四 15:23:33'
+    fd.getDate("h:m:s") // '3:23:33'
 
-    fd.getDate("Y年 MM月 DD日 w hh:mm:ss") ==> '2020年 01月 04日 星期四 15:23:33'
+    fd.getDate("Y/M/D h:m:s") // '2020/1/4 3:23:33'
 
-    fd.getDate("现在是：Y年MM月DD日 w 下午 hh点mm分") ==> '现在是：2020年01月04日 星期四 下午 15点23分'
+    fd.getDate("Y/MM/DD W hh:mm:ss") // '2020/01/04 Thur 15:23:33'
 
-    fd.getDate("MM/DD/Y hh:mm:ss") ==> '1/4/2020 03:23:33'
-    
+    fd.getDate("Y/MM/DD w hh:mm:ss") // '2020/01/04 星期四 15:23:33'
+
+    fd.getDate("Y年 MM月 DD日 w hh:mm:ss") // '2020年 01月 04日 星期四 15:23:33'
+
+    fd.getDate("现在是：Y年MM月DD日 w 下午 hh点mm分") // '现在是：2020年01月04日 星期四 下午 15点23分' 
+    //But this kind of grammar is not friendly to English users.
+
+    fd.getDate("MM/DD/Y hh:mm:ss") // '1/4/2020 03:23:33'
+
     //把已有的其他时间格式化
-    fd.getDate("Y/MM/DD hh:mm:ss W",fd.tsToDate(fd.getTS(10))) ==> "2020/04/20 14:43:05 Mon" //'otherDate' must be type of Date
+    fd.getDate("Y/MM/DD hh:mm:ss W",new Date())) // "2020/04/20 14:43:05 Mon" 
 
     // get the timestamp
-    fd.getTS() ==> 1586491413246   //现在 Now
-    fd.getTS(-1) ==> 1586405054923 //一天前 A day earlier
-    fd.getTS(1) ==> 1586577868836 //一天后 After a day
+    fd.getTS() // 1586491413246   //现在 Now
+    fd.getTS(-1) // 1586405054923 //一天前 A day earlier
+    fd.getTS(1) // 1586577868836 //一天后 After a day
     // date to timestamp
-    fd.getTS(new Date()) ==> 1586491485462
+    fd.getTS(new Date()) // 1586491485462
 
     // timestamp to date
-    fd.tsToDate(1586491413246) ==> '2020-04-10T04:03:33.246Z'
+    fd.tsToDate(1586491413246) // '2020-04-10T04:03:33.246Z'
     //可以直接指定想要的时间格式
-    fd.tsToDate(1586491413246,"Y/MM/DD hh:mm:ss W") ==> '2020/04/10 12:03:33 Fri'
+    fd.tsToDate(1586491413246,"Y/MM/DD hh:mm:ss W") // '2020/04/10 12:03:33 Fri'
 ```
     如果有两个“D”，那么当数字小于10的时候，有零在这个数字前面，就像“01”或者“02”;  
-    如果只有一个“D”的话，就没有这个0。使用过程中可以混合使用。
-    
+    如果只有一个“D”的话，就没有这个0。
+
     If there are two "D", then when the number is less than 10, there is zero in front of the number, such as "01" or "02"; 
     if there is only one "D", there is no zero. Can be mixed during use.
 
 # getDate字符对照表(Comparison table)
 | code | return | for example |
 |:-:|:-:|:-:|
-|  Y  |  返回年(`year`) | 2018,2019,2020...
+|  Y or YY  |  返回年(`year`) | 2018,2019,2020...
 |  M  |  返回月(`month`)，没有前置0 | 1~12
 |  MM |  返回月(`month`)，有前置的0 | 01~12
 |  D  |  返回日(`day`)，没有前置0 | 1~31
@@ -92,25 +94,28 @@
 
 `getDate`函数中会把在字符串中出现的第一个符合条件的字符替换为时间，且再次出现的字符不会再被替换。
 ```js
-    fd.getDate("M M M") ==> 4 M M
+    fd.getDate("M M M") // 4 M M
 ```
 以M为例，MM的优先级比M要高，所以如果输入的字符串中有M也有MM那么被替换的会是MM。
 ```js
-    fd.getDate("M-MM-MM") ==> M-04-MM
+    fd.getDate("M-MM-MM") // M-04-MM
 ```
 
 The `getDate` function will replace the first eligible character in the string with the time, and the character that appears again will not be replaced.
 ```js
-    fd.getDate("M M M") ==> 4 M M
+    fd.getDate("M M M") // 4 M M
 ```
 For example, the priority of MM is higher than that of M, so if there is also MM in the input string, MM will be replaced.
 ```js
-    fd.getDate("M-MM-MM") ==> M-04-MM
+    fd.getDate("M-MM-MM") // M-04-MM
 ```
 
 **No matter what you think, you can contact me: 1909809427@qq.com**
 # 版本(Version)
 ***`If necessary, please translate by yourself,thanks for your understanding.`***  
+**V1.0.8**
+- 改进了一下字符替换的过程代码，去除少量不需要的代码
+- 现在使用`Y`或者`YY`都可以获取年份
 
 **V1.0.7**
 - get.Date()的第一个参数可以为Date类型，第二个参数只能为String或undefined或空字符串,其他则视为无效（String和undefined则为默认格式），为String时做格式化字符串
